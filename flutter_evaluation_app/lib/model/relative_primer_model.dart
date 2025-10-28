@@ -1,8 +1,8 @@
 /**
- * Se recibe dos enteros positivos si los dos números
- * Devuelve uno si los numeros son primos relativos
- * Devuelve cero si no lo son
- *  Dos numeros son primos relativos si no tienen divisores comunes excepto la unidad, se deben aplicar validaciones de datos necesarias
+ * Se reciben dos enteros positivos.
+ * Devuelve 1 si los números son primos relativos.
+ * Devuelve 0 si no lo son.
+ * Dos números son primos relativos si no tienen divisores comunes excepto la unidad.
  */
 
 class RelativePrimerModel {
@@ -10,17 +10,21 @@ class RelativePrimerModel {
     return number > 0;
   }
 
-  int _calculateGCD(int a, int b) {
-    while (b != 0) {
-      int temp = b;
-      b = a % b;
-      a = temp;
+  List<int> _getDivisors(int number) {
+    List<int> divisors = [];
+    for (int i = 1; i <= number; i++) {
+      if (number % i == 0) divisors.add(i);
     }
-    return (a >= 0) ? a : -a;
+    return divisors;
   }
 
   int areRelativePrimes(int number1, int number2) {
+    List<int> divisors1 = _getDivisors(number1);
+    List<int> divisors2 = _getDivisors(number2);
 
-    return _calculateGCD(number1, number2) == 1 ? 1 : 0;
+    for (int divisor in divisors1) {
+      if (divisor != 1 && divisors2.contains(divisor)) return 0;
+    }
+    return 1;
   }
 }
